@@ -13,7 +13,7 @@
     var_dump($_POST);
     if(isset($_POST['submit'])){
         // var_dump($_POST) ;
-        // 1. Infomation get
+        // 1. Infomation getoi
         $username = $_POST['username'] ;
         $pswd = $_POST['pswd'] ;
         $email = $_POST['email'] ;
