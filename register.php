@@ -20,7 +20,7 @@
         $status = $_GET['status'] ;
 
         // 2. Database Connect
-        $conn = mysqli_connect("localhost","root","123456","member") ;
+        $conn = mysqli_connect("localhost","root","","member") ;
         if(!$conn){ 
             echo "database not connect";
         }
