@@ -10,21 +10,31 @@
 <body>
 
     <?php
-    if(isset($_GET['submit'])){
-        // var_dump($_GET) ;
+    var_dump($_POST);
+    if(isset($_POST['submit'])){
+        // var_dump($_POST) ;
         // 1. Infomation get
-        $username = $_GET['username'] ;
-        $pswd = $_GET['pswd'] ;
-        $email = $_GET['email'] ;
-        $pic = $_GET['pic'] ;
-        $status = $_GET['status'] ;
-
+        $username = $_POST['username'] ;
+        $pswd = $_POST['pswd'] ;
+        $email = $_POST['email'] ;
+        // $pic = $_POST['pic'] ;
+        $status = $_POST['status'] ;
+        // $target_dir = "images/";
+        $pic = $_FILES["pic"]["name"];
+        $target_file = "images/".$_FILES["pic"]["name"];
+      
+          if (move_uploaded_file($_FILES["pic"]["tmp_name"], $target_file)) {
+            echo "The file ".$_FILES["pic"]["name"]. " สำเร็จ";
+          } else {
+            echo "Sorry ";
+          }
+    
         // 2. Database Connect
         $conn = mysqli_connect("localhost","root","","member") ;
         if(!$conn){ 
             echo "database not connect";
         }
-        $sql = "INSERT INTO users values('','$username','$pswd','$email','$pic','$status')" ;
+        $sql = "INSERT INTO users values('','$username','$email','$pswd','$pic','$status')" ;
         $result = mysqli_query($conn, $sql) ;
         if($result) {
             echo "OK" ;
@@ -36,7 +46,7 @@
 
 <div class="container mt-3">
   <h2>ลงทะเบียนสมาชิก</h2>
-  <form action="register.php">
+  <form action="register.php"  method="POST" enctype="multipart/form-data">
     <div class="mb-3 mt-3">
 
       <label for="username">Username:</label>
@@ -55,7 +65,7 @@
 
     <div class="mb-3 mt-3">
       <label for="username">Picture:</label>
-      <input type="text" class="form-control" id="pic" placeholder="Enter picture" name="pic">
+      <input type="file" class="form-control" id="pic" placeholder="Enter picture" name="pic">
     </div>
 
     <div class="mb-3 mt-3">
